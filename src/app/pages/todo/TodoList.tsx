@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { connect, useDispatch } from "react-redux"
 import { refreshList } from "../../redux/Todo/Todo.actions"
 import { TodoProps, Todo } from "../../redux/Todo/Todo.types"
@@ -13,7 +13,9 @@ const TodoList = ({ todo }: TodoProps) => {
     const handleClick = () => {
         dispatch(refreshList)
     }
-    console.log(refreshList)
+    useEffect(() => {
+        dispatch(refreshList)
+    }, [dispatch])
     return (
         <div>
             <Divider orientation="center">TODO LIST</Divider>
@@ -40,4 +42,9 @@ const mapStateToProps = (state: RootState) => {
         todo: state.todo.todo,
     }
 }
-export default connect(mapStateToProps)(TodoList)
+
+const mapDispatchToProps = {
+    componentDidMount: refreshList,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList)
