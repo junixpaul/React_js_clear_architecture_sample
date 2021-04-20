@@ -8,6 +8,7 @@ import {
     EDIT_TODO,
     RefreshTodoListSuccess,
     addTodo,
+    editTodo,
 } from "./Todo.types"
 
 const initialState = {
@@ -32,6 +33,7 @@ function todo(state = initialState, action: any) {
 
         case LIST_LOAD_SUCCESS:
             console.log(typeof action.payload)
+            console.log(action.payload)
             return {
                 ...state,
                 todo: action.payload,

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { connect, useDispatch } from "react-redux"
-import { refreshList, addTodo, removeTodo, editTodo } from "../../redux/Todo/Todo.actions"
+import { refreshList } from "../../redux/Todo/Todo.actions"
 import { TodoProps, Todo } from "../../redux/Todo/Todo.types"
 import "antd/dist/antd.css"
 import { List, Divider, Input, Button, Card, Modal } from "antd"
@@ -8,24 +8,24 @@ import { List, Divider, Input, Button, Card, Modal } from "antd"
 interface RootState {
     todo: any
 }
-const TodoList = ({ todo }: TodoProps) => {
+const TodoList = ({ todo, AddTodo, RemoveTodo, EditTodo }: TodoProps) => {
     const dispatch = useDispatch()
     const [input, setInput] = useState("")
     const [modalInput, setModalInput] = useState({ todo: "", id: "" })
     const [tid] = useState(0)
     const [isModalVisible, setIsModalVisible] = useState(false)
-    const addTodoClick = () => {
-        dispatch(addTodo(input))
-        setInput("")
-    }
     const handleCancel = () => {
         setIsModalVisible(false)
     }
+    const addTodoClickEvent = () => {
+        AddTodo({ id: todo.length + 1, todo: input })
+        setInput("")
+    }
     const removeTodo = (todo: any) => {
-        dispatch(removeTodo(todo))
+        RemoveTodo(todo)
     }
     const updateTodoClick = () => {
-        dispatch(editTodo(modalInput))
+        EditTodo(modalInput)
     }
     const showModal = (todo: any) => {
         setModalInput({ todo: todo.todo, id: todo.id })
@@ -44,7 +44,7 @@ const TodoList = ({ todo }: TodoProps) => {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                 />
-                <Button onClick={addTodoClick} type="primary">
+                <Button onClick={addTodoClickEvent} type="primary">
                     Add Todo
                 </Button>
                 <Divider orientation="left">Todo</Divider>
@@ -105,5 +105,12 @@ const mapStateToProps = (state: RootState) => {
         todo: state.todo.todo,
     }
 }
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+        AddTodo: (todo: any) => dispatch({ type: "ADD_TODO", payload: todo }),
+        RemoveTodo: (todo: any) => dispatch({ type: "REMOVE_TODO", payload: todo }),
+        EditTodo: (todo: any) => dispatch({ type: "EDIT_TODO", payload: todo }),
+    }
+}
 
-export default connect(mapStateToProps)(TodoList)
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList)

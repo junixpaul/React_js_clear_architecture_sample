@@ -8,7 +8,9 @@ export const EDIT_TODO = "EDIT_TODO"
 export type TodoProps = {
     todo: Todo[]
     refreshList: () => Todo[]
-    addTodo: () => Todo[]
+    AddTodo: any
+    RemoveTodo: any
+    EditTodo: any
 }
 
 export type TodoActionType = RefreshTodoListSuccess
