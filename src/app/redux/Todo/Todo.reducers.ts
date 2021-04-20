@@ -58,7 +58,9 @@ function todo(state = initialState, action: any) {
             console.log(state.todo[action.payload.id])
             return {
                 ...state,
-                todo: [...state.todo.slice(0, todoIndex), ...state.todo.slice(todoIndex + 1), action.payload],
+                todo: state.todo.map((todo, i) =>
+                    i === action.payload.id ? { ...state.todo, todo: action.payload.todo } : todo,
+                ),
             }
         }
         default:
