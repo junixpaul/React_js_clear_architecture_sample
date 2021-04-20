@@ -17,14 +17,18 @@ export class TodoRepositoryImpl implements TodoRepository {
     }
 
     async AddTodo(todo: any): Promise<Todo[]> {
-        return this.jsonUrl.map((todo: TodoDTO) => new Todo(todo.id, todo.todo))
+        return this.jsonUrl.concat({ todo: todo.todo, id: todo.id })
     }
 
-    async RemoveTodo(): Promise<Todo[]> {
-        return this.jsonUrl.map((todo: TodoDTO) => new Todo(todo.id, todo.todo))
+    async RemoveTodo(todo: any): Promise<Todo[]> {
+        return this.jsonUrl.filter((i) => i.id !== todo.id)
     }
 
-    async EditTodo(): Promise<Todo[]> {
-        return this.jsonUrl.map((todo: TodoDTO) => new Todo(todo.id, todo.todo))
+    async EditTodo(todo: any): Promise<Todo[]> {
+        const index = this.jsonUrl.findIndex((todos) => todos.id === todo.id),
+            tod = [...this.jsonUrl]
+        tod[index] = todo
+        console.log()
+        return tod
     }
 }

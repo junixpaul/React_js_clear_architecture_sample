@@ -32,6 +32,7 @@ export interface removeTodo {
     type: typeof REMOVE_TODO
     payload: {
         id: number
+        todo: string
     }
 }
 

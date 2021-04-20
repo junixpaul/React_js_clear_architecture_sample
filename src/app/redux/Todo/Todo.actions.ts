@@ -15,25 +15,29 @@ export const refreshList = async (dispatch: any) => {
     }
 }
 
-export const AddTodo = async (dispatch: any) => {
-    console.log("XXXXXXXXXXXXX")
-    console.log(dispatch)
-    console.log("XXXXXXXXXXXXX")
-    const todoRepo = new TodoRepositoryImpl()
-    const todoService = new TodoServiceImpl(todoRepo)
-    const todo = await todoService.AddTodo(dispatch)
+export const AddTodo = (todos: any) => {
+    return async (dispatch: any) => {
+        const todoRepo = new TodoRepositoryImpl()
+        const todoService = new TodoServiceImpl(todoRepo)
+        const todo = await todoService.AddTodo(todos)
+        dispatch({ type: ADD_TODO, payload: todo })
+    }
 }
 
-export const RemoveTodo = async (dispatch: any) => {
-    const todoRepo = new TodoRepositoryImpl()
-    const todoService = new TodoServiceImpl(todoRepo)
-    const todo = await todoService.RemoveTodo(dispatch)
-    dispatch({ type: REMOVE_TODO, payload: todo })
+export const RemoveTodo = (todos: any) => {
+    return async (dispatch: any) => {
+        const todoRepo = new TodoRepositoryImpl()
+        const todoService = new TodoServiceImpl(todoRepo)
+        const todo = await todoService.RemoveTodo(todos)
+        dispatch({ type: REMOVE_TODO, payload: todo })
+    }
 }
 
-export const EditTodo = async (dispatch: any) => {
-    const todoRepo = new TodoRepositoryImpl()
-    const todoService = new TodoServiceImpl(todoRepo)
-    const todo = await todoService.EditTodo(dispatch)
-    dispatch({ type: EDIT_TODO, payload: todo })
+export const EditTodo = (todos: any) => {
+    return async (dispatch: any) => {
+        const todoRepo = new TodoRepositoryImpl()
+        const todoService = new TodoServiceImpl(todoRepo)
+        const todo = await todoService.EditTodo(todos)
+        dispatch({ type: EDIT_TODO, payload: todo })
+    }
 }

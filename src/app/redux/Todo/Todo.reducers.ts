@@ -43,23 +43,21 @@ function todo(state = initialState, action: any) {
         case ADD_TODO: {
             return {
                 ...state,
-                todo: [...state.todo, action.payload],
+                todo: action.payload,
             }
         }
 
         case REMOVE_TODO: {
             return {
                 ...state,
-                todo: [...state.todo.filter((todo) => todo !== action.payload)],
+                todo: action.payload,
             }
         }
 
         case EDIT_TODO: {
             return {
                 ...state,
-                todo: state.todo.map((todo, i) =>
-                    i === action.payload.id ? { ...state.todo, todo: action.payload.todo } : todo,
-                ),
+                todo: action.payload,
             }
         }
         default:

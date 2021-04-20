@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { connect, useDispatch } from "react-redux"
-import { refreshList } from "../../redux/Todo/Todo.actions"
+import { refreshList, AddTodo, RemoveTodo, EditTodo } from "../../redux/Todo/Todo.actions"
 import { TodoProps, Todo } from "../../redux/Todo/Todo.types"
 import "antd/dist/antd.css"
 import { List, Divider, Input, Button, Card, Modal } from "antd"
@@ -22,7 +22,9 @@ const TodoList = ({ todo, AddTodo, RemoveTodo, EditTodo }: TodoProps) => {
         setInput("")
     }
     const removeTodo = (todo: any) => {
-        RemoveTodo(todo)
+        console.log(todo.id)
+        console.log(todo.todo)
+        RemoveTodo({ id: todo.id, todo: todo.todo })
     }
     const updateTodoClick = () => {
         EditTodo(modalInput)
@@ -107,9 +109,9 @@ const mapStateToProps = (state: RootState) => {
 }
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        AddTodo: (todo: any) => dispatch({ type: "ADD_TODO", payload: todo }),
-        RemoveTodo: (todo: any) => dispatch({ type: "REMOVE_TODO", payload: todo }),
-        EditTodo: (todo: any) => dispatch({ type: "EDIT_TODO", payload: todo }),
+        AddTodo: (todo: any) => dispatch(AddTodo(todo)),
+        RemoveTodo: (todo: any) => dispatch(RemoveTodo(todo)),
+        EditTodo: (todo: any) => dispatch(EditTodo(todo)),
     }
 }
 
