@@ -8,8 +8,8 @@ class TodoDTO {
 
 export class TodoRepositoryImpl implements TodoRepository {
     jsonUrl = [
-        { todo: "React Redux Clear Architecture", id: 1 },
-        { todo: "Implementation", id: 2 },
+        { todo: "React Redux Clear Architecture", id: 0 },
+        { todo: "Implementation", id: 1 },
     ]
 
     async GetTodo(): Promise<Todo[]> {

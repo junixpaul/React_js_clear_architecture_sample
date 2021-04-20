@@ -15,9 +15,6 @@ export class UserRepositoryImpl implements UserRepository {
     async GetUser(): Promise<User[]> {
         const res = await fetch(this.jsonUrl)
         const jsonData = await res.json()
-        console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXx")
-        console.log(jsonData["data"])
-        console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXx")
         return jsonData["data"].map(
             (user: UserDTO) => new User(user.id, user.email, user.first_name, user.last_name, user.avatar),
         )
