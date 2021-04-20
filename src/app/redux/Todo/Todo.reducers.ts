@@ -53,9 +53,6 @@ function todo(state = initialState, action: any) {
         }
 
         case EDIT_TODO: {
-            const todoIndex = action.payload.id
-            console.log(action.payload.todo)
-            console.log(state.todo[action.payload.id])
             return {
                 ...state,
                 todo: state.todo.map((todo, i) =>
