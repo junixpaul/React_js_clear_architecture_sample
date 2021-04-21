@@ -6,9 +6,8 @@ import {
     ADD_TODO,
     REMOVE_TODO,
     EDIT_TODO,
+    MARK_COMPLETE,
     RefreshTodoListSuccess,
-    addTodo,
-    editTodo,
 } from "./Todo.types"
 
 const initialState = {
@@ -55,6 +54,13 @@ function todo(state = initialState, action: any) {
         }
 
         case EDIT_TODO: {
+            return {
+                ...state,
+                todo: action.payload,
+            }
+        }
+
+        case MARK_COMPLETE: {
             return {
                 ...state,
                 todo: action.payload,

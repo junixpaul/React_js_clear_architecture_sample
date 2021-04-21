@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { connect, useDispatch } from "react-redux"
-import { refreshList, AddTodo, RemoveTodo, EditTodo } from "../../redux/Todo/Todo.actions"
+import { refreshList, AddTodo, RemoveTodo, EditTodo, MarkCompleteTodo } from "../../redux/Todo/Todo.actions"
 import { TodoProps, Todo } from "../../redux/Todo/Todo.types"
 import "antd/dist/antd.css"
 import { List, Divider, Input, Button, Card, Modal } from "antd"
@@ -8,12 +8,13 @@ import { List, Divider, Input, Button, Card, Modal } from "antd"
 interface RootState {
     todo: any
 }
-const TodoList = ({ todo, AddTodo, RemoveTodo, EditTodo }: TodoProps) => {
+const TodoList = ({ todo, AddTodo, RemoveTodo, EditTodo, MarkCompleteTodo }: TodoProps) => {
     const dispatch = useDispatch()
     const [input, setInput] = useState("")
     const [modalInput, setModalInput] = useState({ todo: "", id: "" })
     const [tid] = useState(0)
     const [isModalVisible, setIsModalVisible] = useState(false)
+    const [isModalVisibleWarning, setIsModalVisibleWarning] = useState(false)
     const handleCancel = () => {
         setIsModalVisible(false)
     }
@@ -22,16 +23,23 @@ const TodoList = ({ todo, AddTodo, RemoveTodo, EditTodo }: TodoProps) => {
         setInput("")
     }
     const removeTodo = (todo: any) => {
-        console.log(todo.id)
-        console.log(todo.todo)
-        RemoveTodo({ id: todo.id, todo: todo.todo })
+        RemoveTodo({ id: todo.id, todo: todo.todo, complete: false })
     }
     const updateTodoClick = () => {
         EditTodo(modalInput)
     }
+    const markCompleteClick = (todo: any) => {
+        MarkCompleteTodo({ id: todo.id, todo: todo.todo, complete: todo.complete })
+    }
+    const closeModel = () => {
+        setIsModalVisibleWarning(false)
+    }
     const showModal = (todo: any) => {
         setModalInput({ todo: todo.todo, id: todo.id })
         setIsModalVisible(true)
+    }
+    const showModalWarning = (todo: any) => {
+        setIsModalVisibleWarning(true)
     }
     useEffect(() => {
         dispatch(refreshList)
@@ -59,9 +67,19 @@ const TodoList = ({ todo, AddTodo, RemoveTodo, EditTodo }: TodoProps) => {
                                 <a onClick={() => showModal(todo)} key="list-loadmore-edit">
                                     Edit
                                 </a>,
-                                <a onClick={() => removeTodo(todo)} key={todo.id}>
+                                <a
+                                    onClick={todo.complete == true ? showModalWarning : () => removeTodo(todo)}
+                                    key={todo.id}
+                                >
                                     Delete
                                 </a>,
+                                <Button
+                                    onClick={() => markCompleteClick(todo)}
+                                    key={todo.id}
+                                    style={{ backgroundColor: todo.complete == false ? "" : "green" }}
+                                >
+                                    Mark as Complete
+                                </Button>,
                             ]}
                         >
                             {todo.todo}
@@ -84,6 +102,9 @@ const TodoList = ({ todo, AddTodo, RemoveTodo, EditTodo }: TodoProps) => {
                     onChange={(e) => setModalInput({ todo: e.target.value, id: modalInput.id })}
                 />
             </Modal>
+            <Modal title="Modal" visible={isModalVisibleWarning} onOk={() => closeModel()} okText="OK">
+                <p>Unable to remove. Todo Already Submitted</p>
+            </Modal>
         </div>
     )
 }
@@ -102,6 +123,11 @@ const CardStyle = {
 const InputStyle = {
     width: "87%",
 }
+
+const MarkStyle = {
+    backgroundColor: "87%",
+}
+
 const mapStateToProps = (state: RootState) => {
     return {
         todo: state.todo.todo,
@@ -112,6 +138,7 @@ const mapDispatchToProps = (dispatch: any) => {
         AddTodo: (todo: any) => dispatch(AddTodo(todo)),
         RemoveTodo: (todo: any) => dispatch(RemoveTodo(todo)),
         EditTodo: (todo: any) => dispatch(EditTodo(todo)),
+        MarkCompleteTodo: (todo: any) => dispatch(MarkCompleteTodo(todo)),
     }
 }
 

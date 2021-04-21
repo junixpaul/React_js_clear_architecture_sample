@@ -23,4 +23,13 @@ export class TodoServiceImpl {
     async EditTodo(todo: any): Promise<Todo[]> {
         return this.todoRepo.EditTodo(todo)
     }
+
+    async MarkCompleteTodo(todo: any): Promise<Todo[]> {
+        const todos = { id: todo.id, todo: todo.todo, complete: todo.complete ? false : true }
+        console.log("TTTTTTTTTTTTTTTTTTTTT")
+        console.log("1st")
+        console.log(todos)
+        console.log("TTTTTTTTTTTTTTTTTTTTT")
+        return this.todoRepo.MarkCompleteTodo(todos)
+    }
 }

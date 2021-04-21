@@ -4,6 +4,7 @@ export const LIST_LOAD_FAILURE = "LIST_LOAD_FAILURE"
 export const ADD_TODO = "ADD_TODO"
 export const REMOVE_TODO = "REMOVE_TODO"
 export const EDIT_TODO = "EDIT_TODO"
+export const MARK_COMPLETE = "MARK_COMPLETE"
 
 export type TodoProps = {
     todo: Todo[]
@@ -11,6 +12,7 @@ export type TodoProps = {
     AddTodo: any
     RemoveTodo: any
     EditTodo: any
+    MarkCompleteTodo: any
 }
 
 export type TodoActionType = RefreshTodoListSuccess
@@ -47,4 +49,5 @@ export interface editTodo {
 export interface Todo {
     id: number
     todo: string
+    complete: boolean
 }

@@ -1,4 +1,4 @@
-import { LIST_LOAD_REQUEST, LIST_LOAD_SUCCESS, LIST_LOAD_FAILURE, ADD_TODO, REMOVE_TODO, EDIT_TODO } from "./Todo.types"
+import { LIST_LOAD_REQUEST, LIST_LOAD_SUCCESS, LIST_LOAD_FAILURE, ADD_TODO, REMOVE_TODO, EDIT_TODO, MARK_COMPLETE } from "./Todo.types"
 import { TodoServiceImpl } from "../../../domain/usecases/TodoService"
 import { TodoRepositoryImpl } from "../../../data/repositories/TodoRepositoryImpl"
 
@@ -39,5 +39,14 @@ export const EditTodo = (todos: any) => {
         const todoService = new TodoServiceImpl(todoRepo)
         const todo = await todoService.EditTodo(todos)
         dispatch({ type: EDIT_TODO, payload: todo })
+    }
+}
+
+export const MarkCompleteTodo = (todos: any) => {
+    return async (dispatch: any) => {
+        const todoRepo = new TodoRepositoryImpl()
+        const todoService = new TodoServiceImpl(todoRepo)
+        const todo = await todoService.MarkCompleteTodo(todos)
+        dispatch({ type: MARK_COMPLETE, payload: todo })
     }
 }

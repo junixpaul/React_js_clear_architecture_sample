@@ -5,4 +5,5 @@ export interface TodoRepository {
     RemoveTodo(todo: any): any
     AddTodo(todo: any): any
     EditTodo(todo: any): any
+    MarkCompleteTodo(todo: any): any
 }
