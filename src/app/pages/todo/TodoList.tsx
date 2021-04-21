@@ -14,7 +14,6 @@ const TodoList = ({ todo, AddTodo, RemoveTodo, EditTodo, MarkCompleteTodo }: Tod
     const [modalInput, setModalInput] = useState({ todo: "", id: "" })
     const [tid] = useState(0)
     const [isModalVisible, setIsModalVisible] = useState(false)
-    const [isModalVisibleWarning, setIsModalVisibleWarning] = useState(false)
     const handleCancel = () => {
         setIsModalVisible(false)
     }
@@ -23,7 +22,7 @@ const TodoList = ({ todo, AddTodo, RemoveTodo, EditTodo, MarkCompleteTodo }: Tod
         setInput("")
     }
     const removeTodo = (todo: any) => {
-        RemoveTodo({ id: todo.id, todo: todo.todo, complete: false })
+        RemoveTodo({ id: todo.id, todo: todo.todo, complete: todo.complete })
     }
     const updateTodoClick = () => {
         EditTodo(modalInput)
@@ -31,15 +30,9 @@ const TodoList = ({ todo, AddTodo, RemoveTodo, EditTodo, MarkCompleteTodo }: Tod
     const markCompleteClick = (todo: any) => {
         MarkCompleteTodo({ id: todo.id, todo: todo.todo, complete: todo.complete })
     }
-    const closeModel = () => {
-        setIsModalVisibleWarning(false)
-    }
     const showModal = (todo: any) => {
         setModalInput({ todo: todo.todo, id: todo.id })
         setIsModalVisible(true)
-    }
-    const showModalWarning = (todo: any) => {
-        setIsModalVisibleWarning(true)
     }
     useEffect(() => {
         dispatch(refreshList)
@@ -67,10 +60,7 @@ const TodoList = ({ todo, AddTodo, RemoveTodo, EditTodo, MarkCompleteTodo }: Tod
                                 <a onClick={() => showModal(todo)} key="list-loadmore-edit">
                                     Edit
                                 </a>,
-                                <a
-                                    onClick={todo.complete == true ? showModalWarning : () => removeTodo(todo)}
-                                    key={todo.id}
-                                >
+                                <a onClick={() => removeTodo(todo)} key={todo.id}>
                                     Delete
                                 </a>,
                                 <Button
@@ -101,9 +91,6 @@ const TodoList = ({ todo, AddTodo, RemoveTodo, EditTodo, MarkCompleteTodo }: Tod
                     value={modalInput.todo}
                     onChange={(e) => setModalInput({ todo: e.target.value, id: modalInput.id })}
                 />
-            </Modal>
-            <Modal title="Modal" visible={isModalVisibleWarning} onOk={() => closeModel()} okText="OK">
-                <p>Unable to remove. Todo Already Submitted</p>
             </Modal>
         </div>
     )
