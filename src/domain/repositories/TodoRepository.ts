@@ -6,4 +6,5 @@ export interface TodoRepository {
     AddTodo(todo: any): any
     EditTodo(todo: any): any
     MarkCompleteTodo(todo: any): any
+    GetDays(todo: any): any
 }

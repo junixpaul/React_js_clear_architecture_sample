@@ -27,6 +27,7 @@ export interface addTodo {
     payload: {
         id: number
         todo: string
+        completed: false
     }
 }
 
@@ -50,4 +51,5 @@ export interface Todo {
     id: number
     todo: string
     complete: boolean
+    dateCreated: boolean
 }

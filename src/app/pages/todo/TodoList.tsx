@@ -3,7 +3,7 @@ import { connect, useDispatch } from "react-redux"
 import { refreshList, AddTodo, RemoveTodo, EditTodo, MarkCompleteTodo } from "../../redux/Todo/Todo.actions"
 import { TodoProps, Todo } from "../../redux/Todo/Todo.types"
 import "antd/dist/antd.css"
-import { List, Divider, Input, Button, Card, Modal } from "antd"
+import { List, Divider, Input, Button, Card, Modal, Avatar } from "antd"
 
 interface RootState {
     todo: any
@@ -18,7 +18,7 @@ const TodoList = ({ todo, AddTodo, RemoveTodo, EditTodo, MarkCompleteTodo }: Tod
         setIsModalVisible(false)
     }
     const addTodoClickEvent = () => {
-        AddTodo({ id: todo.length + 1, todo: input })
+        AddTodo({ id: todo.length + 1, todo: input, complete: false })
         setInput("")
     }
     const removeTodo = (todo: any) => {
@@ -66,13 +66,16 @@ const TodoList = ({ todo, AddTodo, RemoveTodo, EditTodo, MarkCompleteTodo }: Tod
                                 <Button
                                     onClick={() => markCompleteClick(todo)}
                                     key={todo.id}
-                                    style={{ backgroundColor: todo.complete == false ? "" : "green" }}
+                                    style={{
+                                        color: todo.complete == false ? "blue" : "white",
+                                        backgroundColor: todo.complete == false ? "" : "green",
+                                    }}
                                 >
                                     Mark as Complete
                                 </Button>,
                             ]}
                         >
-                            {todo.todo}
+                            <Avatar style={AvatarStyle}>{todo.days}</Avatar> {todo.todo}
                         </List.Item>
                     )}
                 />
@@ -107,6 +110,11 @@ const CardStyle = {
     width: "45%",
 }
 
+const AvatarStyle = {
+    color: "white",
+    backgroundColor: "blue",
+    marginRight: 10,
+}
 const InputStyle = {
     width: "87%",
 }
