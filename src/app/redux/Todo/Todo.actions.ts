@@ -8,7 +8,7 @@ import {
     MARK_COMPLETE,
 } from "./Todo.types"
 import { TodoServiceImpl } from "../../../domain/usecases/TodoService"
-import { TodoRepositoryImpl } from "../../../data/repositories/TodoRepositoryImpl"
+import { TodoRepositoryImpl } from "../../../data/repositories/LocalStorageRepositoryImpl"
 
 export const refreshList = async (dispatch: any) => {
     dispatch({ type: LIST_LOAD_REQUEST })
@@ -29,8 +29,8 @@ export const AddTodo = (todos: any) => {
         const todoRepo = new TodoRepositoryImpl()
         const todoService = new TodoServiceImpl(todoRepo)
         const todo = await todoService.AddTodo(todos)
-        const todos2 = await todoService.GetDays(todo)
-        dispatch({ type: ADD_TODO, payload: todos2 })
+        const todox = await todoService.GetDays(todo)
+        dispatch({ type: ADD_TODO, payload: todox })
     }
 }
 
@@ -48,7 +48,8 @@ export const EditTodo = (todos: any) => {
         const todoRepo = new TodoRepositoryImpl()
         const todoService = new TodoServiceImpl(todoRepo)
         const todo = await todoService.EditTodo(todos)
-        dispatch({ type: EDIT_TODO, payload: todo })
+        const todox = await todoService.GetDays(todo)
+        dispatch({ type: EDIT_TODO, payload: todox })
     }
 }
 

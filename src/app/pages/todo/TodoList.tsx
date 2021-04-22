@@ -11,7 +11,7 @@ interface RootState {
 const TodoList = ({ todo, AddTodo, RemoveTodo, EditTodo, MarkCompleteTodo }: TodoProps) => {
     const dispatch = useDispatch()
     const [input, setInput] = useState("")
-    const [modalInput, setModalInput] = useState({ todo: "", id: "" })
+    const [modalInput, setModalInput] = useState({ todo: "", id: "", dateCreated: "", days: "" })
     const [tid] = useState(0)
     const [isModalVisible, setIsModalVisible] = useState(false)
     const handleCancel = () => {
@@ -31,7 +31,7 @@ const TodoList = ({ todo, AddTodo, RemoveTodo, EditTodo, MarkCompleteTodo }: Tod
         MarkCompleteTodo({ id: todo.id, todo: todo.todo, complete: todo.complete })
     }
     const showModal = (todo: any) => {
-        setModalInput({ todo: todo.todo, id: todo.id })
+        setModalInput({ todo: todo.todo, id: todo.id, dateCreated: todo.dateCreated, days: todo.days })
         setIsModalVisible(true)
     }
     useEffect(() => {
